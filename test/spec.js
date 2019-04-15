@@ -111,6 +111,21 @@ describe('API', () => {
     });
 
 
+    it('should 204 if no guest by code found', function (done) {
+        mongoUnit.load(guest)
+            .then(() => request(app)
+                .post('/guests/meet')
+                .send({
+                    code: "A000",
+                    plus: 3
+                })
+                .expect(204)
+                .then(() => done())
+            )
+            .catch(e => done(e));
+    });
+
+
     after(done => {
         mongoUnit.stop().then(() => mongoose.disconnect()).then(done)
     });

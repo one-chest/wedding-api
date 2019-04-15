@@ -11,12 +11,14 @@ app.get('/health', function(req, res) {
     res.send({status: "UP"});
 });
 
-app.post('/guests/meet', function(req, res) {
-    res.status(200);
+app.post('/guests/meet', function (req, res) {
     return Guest.meet(req.body.code, {
         plus: req.body.plus
     })
-        .then(r => res.send(r));
+        .then(r => {
+            res.status(r.nModified > 0 ? 200 : 204);
+            res.send();
+        });
 });
 
 app.get('/guests', function(req, res) {
