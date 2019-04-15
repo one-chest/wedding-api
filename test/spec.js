@@ -21,7 +21,7 @@ const approvedGuest = {
         "name": "Руслан Михалев",
         "createdDate": new Date(),
         "plus": 1,
-        "approved": false,
+        "approved": true,
         "approvedDate": new Date()
     }
 };
@@ -78,11 +78,38 @@ describe('API', () => {
                     assert.equal(response.body.length, 1);
                     assert.equal(response.body[0].plus, 1);
                     assert.equal(response.body[0].name, "Руслан Михалев");
+                    assert.equal(response.body[0].approved, true);
                     done()
                 })
             )
             .catch(e => done(e));
     });
+
+    it('should approve the guest', function (done) {
+        mongoUnit.load(guest)
+            .then(() => request(app)
+                .post('/guests/meet')
+                .send({
+                    code: "0000",
+                    plus: 3
+                })
+                .expect(200)
+                .then(response => {
+                    return request(app)
+                        .get('/guests')
+                        .expect(200)
+                        .then(response => {
+                            assert.equal(response.body.length, 1);
+                            assert.equal(response.body[0].approved, true);
+                            assert.equal(response.body[0].plus, 3);
+                            assert.equal(response.body[0].name, "Руслан Михалев");
+                            done()
+                        });
+                })
+            )
+            .catch(e => done(e));
+    });
+
 
     after(done => {
         mongoUnit.stop().then(() => mongoose.disconnect()).then(done)
