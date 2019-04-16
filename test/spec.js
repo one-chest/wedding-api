@@ -1,9 +1,10 @@
-const prepare = require('mocha-prepare');
 const mongoUnit = require('mongo-unit');
 const request = require('supertest');
 const app = require('../app');
 const mongoose = require('mongoose');
+const mongodb = require('mongoose');
 const assert = require('assert');
+const {Guest} = require('../model');
 
 const guest = {
     guests: {
@@ -32,6 +33,17 @@ describe('Application managment test', () => {
         request(app)
             .get('/health')
             .expect(200, done);
+    });
+
+});
+
+describe('Test util', () => {
+
+    const util = require('../util');
+
+    it('code size should be 5 or less', function (done) {
+        assert.ok(util.generateCode().length <= 5);
+        done()
     });
 
 });
@@ -122,6 +134,28 @@ describe('API', () => {
                 .expect(204)
                 .then(() => done())
             )
+            .catch(e => done(e));
+    });
+
+
+    it('should save the guest', function (done) {
+        request(app)
+            .post('/guests')
+            .send({
+                name: "Руслан Михалев"
+            })
+            .expect(200)
+            .then(response => {
+                return Guest.findAll()
+                    .then(guests => {
+                        assert.equal(guests.length, 1);
+                        assert.equal(guests[0].name, "Руслан Михалев");
+                        assert.ok(guests[0].code);
+                        assert.equal(guests[0].approved, undefined);
+                        assert.equal(guests[0].plus, undefined);
+                        done();
+                    })
+            })
             .catch(e => done(e));
     });
 

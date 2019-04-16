@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const util = require('./util');
 
 const GuestSchema = new mongoose.Schema({
     code: {type: String, required: true, index: true},
@@ -31,8 +32,13 @@ module.exports = {
                 }
             })
         },
-        save: data => new GuestModel(data).save(),
+        save: name => {
+            return new GuestModel({
+                name: name,
+                code: util.generateCode(),
+                createdDate: new Date()
+            }).save()
+        },
         delete: guestId => GuestModel.findByIdAndRemove(guestId)
     }
-
 };
