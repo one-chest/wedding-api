@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const util = require('./util');
+const qrcodeGenerator = require('qrcode');
+
+const weddingWebsite = process.env.WEDDING_WEBSITE || 'mongodb://localhost:27017/wedding';
 
 const GuestSchema = new mongoose.Schema({
     code: {type: String, required: true, index: true},
+    qrcode: {type: String, required: true},
     name: {type: String, required: true},
     createdDate: Date,
     plus: Number,
@@ -33,11 +37,15 @@ module.exports = {
             })
         },
         save: name => {
-            return new GuestModel({
-                name: name,
-                code: util.generateCode(),
-                createdDate: new Date()
-            }).save()
+            const code = util.generateCode();
+            return qrcodeGenerator.toDataURL(`${weddingWebsite}/?code=${code}`)
+                .then(qrcode => new GuestModel({
+                        name: name,
+                        code: code,
+                        qrcode: qrcode,
+                        createdDate: new Date()
+                    }).save()
+                )
         },
         delete: guestId => GuestModel.findByIdAndRemove(guestId)
     }

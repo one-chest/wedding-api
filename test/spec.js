@@ -10,6 +10,7 @@ const guest = {
     guests: {
         "_id": "56d9bf92f9be48771d6fe5b1",
         "code": "0000",
+        "qrcode": "data:image/png;base64,iVB===",
         "name": "Руслан Михалев",
         "createdDate": new Date(),
     }
@@ -19,6 +20,7 @@ const approvedGuest = {
     guests: {
         "_id": "56d9bf92f9be48771d6fe5b1",
         "code": "0000",
+        "qrcode": "data:image/png;base64,iVB===",
         "name": "Руслан Михалев",
         "createdDate": new Date(),
         "plus": 1,
@@ -74,6 +76,8 @@ describe('API', () => {
                     assert.equal(response.body.length, 1);
                     assert.equal(response.body[0].name, "Руслан Михалев");
                     assert.equal(response.body[0].code, "0000");
+                    assert.ok(response.body[0].qrcode);
+                    assert.ok(response.body[0].qrcode.indexOf("png") > 0);
                     assert.ok(response.body[0].createdDate);
                     done()
                 })
@@ -151,6 +155,8 @@ describe('API', () => {
                         assert.equal(guests.length, 1);
                         assert.equal(guests[0].name, "Руслан Михалев");
                         assert.ok(guests[0].code);
+                        assert.ok(guests[0].qrcode);
+                        assert.ok(guests[0].qrcode.indexOf("png") > 0);
                         assert.equal(guests[0].approved, undefined);
                         assert.equal(guests[0].plus, undefined);
                         done();

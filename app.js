@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const {connect, Guest} = require('./model');
 const bodyParser = require('body-parser');
+const qrcode = require('qrcode');
 
 app.mongoConnect = connect;
 app.use(bodyParser.json());
