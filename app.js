@@ -31,8 +31,8 @@ app.post('/guests', function (req, res) {
 });
 
 app.get('/guests/:id', function (req, res) {
-    res.status(501);
-    res.send();
-});
+    return Guest.findByCode(req.params.id).then(r => res.send(r));
+})
+;
 
 module.exports = app;

@@ -16,6 +16,25 @@ const guest = {
     }
 };
 
+const guests = {
+    guests: [
+        {
+            "_id": "56d9bf92f9be48771d6fe5b1",
+            "code": "0000",
+            "qrcode": "data:image/png;base64,iVB===",
+            "name": "Руслан Михалев",
+            "createdDate": new Date(),
+        },
+        {
+            "_id": "56d9bf92f9be48771d6fe5b2",
+            "code": "0001",
+            "qrcode": "data:image/png;base64,iVB===",
+            "name": "Анастасия Шаповалова",
+            "createdDate": new Date(),
+        }
+    ]
+};
+
 const approvedGuest = {
     guests: {
         "_id": "56d9bf92f9be48771d6fe5b1",
@@ -79,6 +98,24 @@ describe('API', () => {
                     assert.ok(response.body[0].qrcode);
                     assert.ok(response.body[0].qrcode.indexOf("png") > 0);
                     assert.ok(response.body[0].createdDate);
+                    done()
+                })
+            )
+            .catch(e => done(e));
+    });
+
+    it('should find guest by code', function (done) {
+        mongoUnit.load(guests)
+            .then(() => request(app)
+                .get('/guests/0001')
+                .expect(200)
+                .then(response => {
+                    // assert.equal(response.body.length, 1);
+                    assert.equal(response.body.name, "Анастасия Шаповалова");
+                    assert.equal(response.body.code, "0001");
+                    assert.ok(response.body.qrcode);
+                    assert.ok(response.body.qrcode.indexOf("png") > 0);
+                    assert.ok(response.body.createdDate);
                     done()
                 })
             )

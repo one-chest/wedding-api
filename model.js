@@ -26,6 +26,9 @@ module.exports = {
         findAll: () => {
             return GuestModel.find({})
         },
+        findByCode: code => {
+            return GuestModel.findOne({code})
+        },
         meet: (code, data) => {
             console.debug(`Approve user with code ${code}`);
             return GuestModel.updateOne({code: code}, {
