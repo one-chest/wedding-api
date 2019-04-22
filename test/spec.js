@@ -27,7 +27,7 @@ const guests = {
         },
         {
             "_id": "56d9bf92f9be48771d6fe5b2",
-            "code": "0001",
+            "code": "00a1",
             "qrcode": "data:image/png;base64,iVB===",
             "name": "Анастасия Шаповалова",
             "createdDate": new Date(),
@@ -107,12 +107,11 @@ describe('API', () => {
     it('should find guest by code', function (done) {
         mongoUnit.load(guests)
             .then(() => request(app)
-                .get('/guests/0001')
+                .get('/guests/00a1')
                 .expect(200)
                 .then(response => {
-                    // assert.equal(response.body.length, 1);
                     assert.equal(response.body.name, "Анастасия Шаповалова");
-                    assert.equal(response.body.code, "0001");
+                    assert.equal(response.body.code, "00a1");
                     assert.ok(response.body.qrcode);
                     assert.ok(response.body.qrcode.indexOf("png") > 0);
                     assert.ok(response.body.createdDate);
