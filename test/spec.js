@@ -112,6 +112,20 @@ describe('API', () => {
                 .then(response => {
                     assert.equal(response.body.name, "Анастасия Шаповалова");
                     assert.equal(response.body.code, "00a1");
+                    done()
+                })
+            )
+            .catch(e => done(e));
+    });
+
+    it('should find guest by code in upper case', function (done) {
+        mongoUnit.load(guests)
+            .then(() => request(app)
+                .get('/guests/00A1')
+                .expect(200)
+                .then(response => {
+                    assert.equal(response.body.name, "Анастасия Шаповалова");
+                    assert.equal(response.body.code, "00a1");
                     assert.ok(response.body.qrcode);
                     assert.ok(response.body.qrcode.indexOf("png") > 0);
                     assert.ok(response.body.createdDate);

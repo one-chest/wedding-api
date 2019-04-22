@@ -31,7 +31,7 @@ app.post('/guests', function (req, res) {
 });
 
 app.get('/guests/:id', function (req, res) {
-    return Guest.findByCode(req.params.id).then(r => res.send(r));
+    return Guest.findByCode(req.params.id.toLowerCase()).then(r => res.send(r));
 })
 ;
 
