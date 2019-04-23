@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const util = require('./util');
 const qrcodeGenerator = require('qrcode');
 
-const weddingWebsite = process.env.WEDDING_WEBSITE || 'mongodb://localhost:27017/wedding';
+const weddingWebsite = process.env.WEDDING_WEBSITE || 'localhost:80';
 
 const GuestSchema = new mongoose.Schema({
     code: {type: String, required: true, index: true},
@@ -43,7 +43,7 @@ module.exports = {
         },
         save: name => {
             const code = util.generateCode();
-            return qrcodeGenerator.toDataURL(`${weddingWebsite}/?code=${code}`)
+            return qrcodeGenerator.toDataURL(`${weddingWebsite}/${code}`)
                 .then(qrcode => new GuestModel({
                         name: name,
                         code: code,
