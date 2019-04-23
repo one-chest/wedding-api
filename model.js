@@ -8,6 +8,7 @@ const GuestSchema = new mongoose.Schema({
     code: {type: String, required: true, index: true},
     qrcode: {type: String, required: true},
     name: {type: String, required: true},
+    email: {type: String},
     createdDate: Date,
     extras: Number,
     approved: Boolean,
@@ -34,6 +35,7 @@ module.exports = {
             return GuestModel.updateOne({code: code}, {
                 $set: {
                     extras: data.extras,
+                    email: data.email,
                     approved: true,
                     approvedDate: new Date()
                 }

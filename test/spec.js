@@ -41,6 +41,7 @@ const approvedGuest = {
         "code": "0000",
         "qrcode": "data:image/png;base64,iVB===",
         "name": "Руслан Михалев",
+        "email": "guest@company.com",
         "createdDate": new Date(),
         "extras": 1,
         "approved": true,
@@ -144,6 +145,7 @@ describe('API', () => {
                     assert.equal(response.body.length, 1);
                     assert.equal(response.body[0].extras, 1);
                     assert.equal(response.body[0].name, "Руслан Михалев");
+                    assert.equal(response.body[0].email, "guest@company.com");
                     assert.equal(response.body[0].approved, true);
                     done()
                 })
@@ -155,7 +157,7 @@ describe('API', () => {
         mongoUnit.load(guest)
             .then(() => request(app)
                 .post('/guests/meet')
-                .send("invite_code=0000&extras=3")
+                .send("invite_code=0000&extras=3&email=guest@company.com")
                 .expect(200)
                 .then(response => {
                     return request(app)
@@ -166,6 +168,7 @@ describe('API', () => {
                             assert.equal(response.body[0].approved, true);
                             assert.equal(response.body[0].extras, 3);
                             assert.equal(response.body[0].name, "Руслан Михалев");
+                            assert.equal(response.body[0].email, "guest@company.com");
                             done()
                         });
                 })
