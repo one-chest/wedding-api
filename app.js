@@ -6,6 +6,7 @@ const qrcode = require('qrcode');
 
 app.mongoConnect = connect;
 app.use(bodyParser.json());
+app.use(express.urlencoded());
 
 app.get('/health', function (req, res) {
     res.status(200);
