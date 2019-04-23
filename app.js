@@ -14,7 +14,7 @@ app.get('/guests/health', function (req, res) {
 });
 
 app.post('/guests/meet', function (req, res) {
-    return Guest.meet(req.body.code, {
+    return Guest.meet(req.body.invite_code, {
         extras: req.body.extras
     })
         .then(r => {

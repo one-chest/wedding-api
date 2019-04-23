@@ -155,7 +155,7 @@ describe('API', () => {
         mongoUnit.load(guest)
             .then(() => request(app)
                 .post('/guests/meet')
-                .send("code=0000&extras=3")
+                .send("invite_code=0000&extras=3")
                 .expect(200)
                 .then(response => {
                     return request(app)
@@ -179,7 +179,7 @@ describe('API', () => {
             .then(() => request(app)
                 .post('/guests/meet')
                 .send({
-                    code: "A000",
+                    invite_code: "A000",
                     extras: 3
                 })
                 .expect(204)
