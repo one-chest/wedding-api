@@ -52,7 +52,7 @@ describe('Application managment test', () => {
 
     it('health should be 200', function (done) {
         request(app)
-            .get('/health')
+            .get('/guests/health')
             .expect(200, done);
     });
 

@@ -8,7 +8,7 @@ app.mongoConnect = connect;
 app.use(bodyParser.json());
 app.use(express.urlencoded());
 
-app.get('/health', function (req, res) {
+app.get('/guests/health', function (req, res) {
     res.status(200);
     res.send({status: "UP"});
 });
