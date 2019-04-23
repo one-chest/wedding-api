@@ -14,7 +14,7 @@ app.get('/health', function (req, res) {
 
 app.post('/guests/meet', function (req, res) {
     return Guest.meet(req.body.code, {
-        plus: req.body.plus
+        extras: req.body.extras
     })
         .then(r => {
             res.status(r.nModified > 0 ? 200 : 204);

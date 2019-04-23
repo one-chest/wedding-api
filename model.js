@@ -9,7 +9,7 @@ const GuestSchema = new mongoose.Schema({
     qrcode: {type: String, required: true},
     name: {type: String, required: true},
     createdDate: Date,
-    plus: Number,
+    extras: Number,
     approved: Boolean,
     approvedDate: Date
 });
@@ -33,7 +33,7 @@ module.exports = {
             console.debug(`Approve user with code ${code}`);
             return GuestModel.updateOne({code: code}, {
                 $set: {
-                    plus: data.plus,
+                    extras: data.extras,
                     approved: true,
                     approvedDate: new Date()
                 }

@@ -42,7 +42,7 @@ const approvedGuest = {
         "qrcode": "data:image/png;base64,iVB===",
         "name": "Руслан Михалев",
         "createdDate": new Date(),
-        "plus": 1,
+        "extras": 1,
         "approved": true,
         "approvedDate": new Date()
     }
@@ -142,7 +142,7 @@ describe('API', () => {
                 .expect(200)
                 .then(response => {
                     assert.equal(response.body.length, 1);
-                    assert.equal(response.body[0].plus, 1);
+                    assert.equal(response.body[0].extras, 1);
                     assert.equal(response.body[0].name, "Руслан Михалев");
                     assert.equal(response.body[0].approved, true);
                     done()
@@ -157,7 +157,7 @@ describe('API', () => {
                 .post('/guests/meet')
                 .send({
                     code: "0000",
-                    plus: 3
+                    extras: 3
                 })
                 .expect(200)
                 .then(response => {
@@ -167,7 +167,7 @@ describe('API', () => {
                         .then(response => {
                             assert.equal(response.body.length, 1);
                             assert.equal(response.body[0].approved, true);
-                            assert.equal(response.body[0].plus, 3);
+                            assert.equal(response.body[0].extras, 3);
                             assert.equal(response.body[0].name, "Руслан Михалев");
                             done()
                         });
@@ -183,7 +183,7 @@ describe('API', () => {
                 .post('/guests/meet')
                 .send({
                     code: "A000",
-                    plus: 3
+                    extras: 3
                 })
                 .expect(204)
                 .then(() => done())
@@ -208,7 +208,7 @@ describe('API', () => {
                         assert.ok(guests[0].qrcode);
                         assert.ok(guests[0].qrcode.indexOf("png") > 0);
                         assert.equal(guests[0].approved, undefined);
-                        assert.equal(guests[0].plus, undefined);
+                        assert.equal(guests[0].extras, undefined);
                         done();
                     })
             })
