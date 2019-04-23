@@ -1,7 +1,7 @@
 {
   "name": "wedding-api",
   "version": "0.0.1",
-  "description": "",
+  "description": "Wedding website API",
   "main": "index.js",
   "scripts": {
     "dev": "node server.js",
