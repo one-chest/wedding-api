@@ -1,0 +1,33 @@
+{
+  "name": "wedding-api",
+  "version": "0.0.1",
+  "description": "Wedding website API",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node server.js",
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/one-chest/wedding-api.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.5.1",
+    "qrcode": "^1.3.3"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^6.1.3",
+    "mocha-prepare": "^0.1.0",
+    "mongo-unit": "^1.4.4",
+    "supertest": "^4.0.2"
+  },
+  "author": "Mikhalev Ruslan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/one-chest/wedding-api/issues"
+  },
+  "homepage": "https://github.com/one-chest/wedding-api#readme"
+}
