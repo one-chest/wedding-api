@@ -42,16 +42,17 @@ module.exports = {
                 }
             })
         },
-        save: (name, cardId) => {
+        save: (data) => {
             const code = util.generateCode();
             return qrcodeGenerator.toDataURL(`${weddingWebsite}/${code}`)
-                .then(qrcode => new GuestModel({
-                        name: name,
-                        cardId: cardId,
-                        code: code,
-                        qrcode: qrcode,
-                        createdDate: new Date()
-                    }).save()
+                .then(qrcode => {
+                        return new GuestModel({
+                            ...data,
+                            code,
+                            qrcode: qrcode,
+                            createdDate: new Date()
+                        }).save();
+                    }
                 )
         },
         delete: guestId => GuestModel.findByIdAndRemove(guestId)

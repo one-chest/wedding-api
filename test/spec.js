@@ -205,7 +205,9 @@ describe('API', () => {
             .post('/guests')
             .send({
                 name: "Руслан Михалев",
-                cardId: "0abcdefg"
+                cardId: "0abcdefg",
+                email: "guest@company.com",
+                extras: 1
             })
             .expect(200)
             .then(response => {
@@ -218,7 +220,8 @@ describe('API', () => {
                         assert.ok(guests[0].qrcode);
                         assert.ok(guests[0].qrcode.indexOf("png") > 0);
                         assert.equal(guests[0].approved, undefined);
-                        assert.equal(guests[0].extras, undefined);
+                        assert.equal(guests[0].extras, 1);
+                        assert.equal(guests[0].email, "guest@company.com");
                         done();
                     })
             })
