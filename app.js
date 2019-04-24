@@ -3,6 +3,7 @@ const app = express();
 const {connect, Guest} = require('./model');
 const bodyParser = require('body-parser');
 const qrcode = require('qrcode');
+const trelloService = require('./trello-service');
 
 app.mongoConnect = connect;
 app.use(bodyParser.json());
@@ -18,6 +19,11 @@ app.post('/guests/meet', function (req, res) {
         extras: req.body.extras,
         email: req.body.email
     })
+        .then(result => {
+            return Guest.findByCode(req.body.invite_code)
+                .then(r => trelloService.approveGuest(r))
+                .then(r => result)
+        })
         .then(r => {
             res.status(r.nModified > 0 ? 200 : 204);
             res.send();

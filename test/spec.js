@@ -1,3 +1,5 @@
+process.env.TRELLO_ENABLED = "false";
+
 const mongoUnit = require('mongo-unit');
 const request = require('supertest');
 const app = require('../app');
