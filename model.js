@@ -5,6 +5,7 @@ const qrcodeGenerator = require('qrcode');
 const weddingWebsite = process.env.WEDDING_WEBSITE || 'localhost:80';
 
 const GuestSchema = new mongoose.Schema({
+    cardId: {type: String, required: true},
     code: {type: String, required: true, index: true},
     qrcode: {type: String, required: true},
     name: {type: String, required: true},
@@ -41,11 +42,12 @@ module.exports = {
                 }
             })
         },
-        save: name => {
+        save: (name, cardId) => {
             const code = util.generateCode();
             return qrcodeGenerator.toDataURL(`${weddingWebsite}/${code}`)
                 .then(qrcode => new GuestModel({
                         name: name,
+                        cardId: cardId,
                         code: code,
                         qrcode: qrcode,
                         createdDate: new Date()
