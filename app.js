@@ -29,7 +29,7 @@ app.get('/guests', function (req, res) {
 });
 
 app.post('/guests', function (req, res) {
-    return Guest.save(req.body.name).then(r => res.send(r));
+    return Guest.save(req.body.name, req.body.cardId).then(r => res.send(r));
 });
 
 app.get('/guests/:id', function (req, res) {

@@ -9,6 +9,7 @@ const {Guest} = require('../model');
 const guest = {
     guests: {
         "_id": "56d9bf92f9be48771d6fe5b1",
+        "cardId": "0abcdefg",
         "code": "0000",
         "qrcode": "data:image/png;base64,iVB===",
         "name": "Руслан Михалев",
@@ -20,6 +21,7 @@ const guests = {
     guests: [
         {
             "_id": "56d9bf92f9be48771d6fe5b1",
+            "cardId": "0abcdefg",
             "code": "0000",
             "qrcode": "data:image/png;base64,iVB===",
             "name": "Руслан Михалев",
@@ -27,6 +29,7 @@ const guests = {
         },
         {
             "_id": "56d9bf92f9be48771d6fe5b2",
+            "cardId": "0abcdefg",
             "code": "00a1",
             "qrcode": "data:image/png;base64,iVB===",
             "name": "Анастасия Шаповалова",
@@ -38,6 +41,7 @@ const guests = {
 const approvedGuest = {
     guests: {
         "_id": "56d9bf92f9be48771d6fe5b1",
+        "cardId": "0abcdefg",
         "code": "0000",
         "qrcode": "data:image/png;base64,iVB===",
         "name": "Руслан Михалев",
@@ -96,6 +100,7 @@ describe('API', () => {
                     assert.equal(response.body.length, 1);
                     assert.equal(response.body[0].name, "Руслан Михалев");
                     assert.equal(response.body[0].code, "0000");
+                    assert.equal(response.body[0].cardId, "0abcdefg");
                     assert.ok(response.body[0].qrcode);
                     assert.ok(response.body[0].qrcode.indexOf("png") > 0);
                     assert.ok(response.body[0].createdDate);
@@ -127,6 +132,7 @@ describe('API', () => {
                 .then(response => {
                     assert.equal(response.body.name, "Анастасия Шаповалова");
                     assert.equal(response.body.code, "00a1");
+                    assert.equal(response.body.cardId, "0abcdefg");
                     assert.ok(response.body.qrcode);
                     assert.ok(response.body.qrcode.indexOf("png") > 0);
                     assert.ok(response.body.createdDate);
@@ -145,6 +151,7 @@ describe('API', () => {
                     assert.equal(response.body.length, 1);
                     assert.equal(response.body[0].extras, 1);
                     assert.equal(response.body[0].name, "Руслан Михалев");
+                    assert.equal(response.body[0].cardId, "0abcdefg");
                     assert.equal(response.body[0].email, "guest@company.com");
                     assert.equal(response.body[0].approved, true);
                     done()
@@ -168,6 +175,7 @@ describe('API', () => {
                             assert.equal(response.body[0].approved, true);
                             assert.equal(response.body[0].extras, 3);
                             assert.equal(response.body[0].name, "Руслан Михалев");
+                            assert.equal(response.body[0].cardId, "0abcdefg");
                             assert.equal(response.body[0].email, "guest@company.com");
                             done()
                         });
@@ -196,7 +204,8 @@ describe('API', () => {
         request(app)
             .post('/guests')
             .send({
-                name: "Руслан Михалев"
+                name: "Руслан Михалев",
+                cardId: "0abcdefg"
             })
             .expect(200)
             .then(response => {
@@ -204,6 +213,7 @@ describe('API', () => {
                     .then(guests => {
                         assert.equal(guests.length, 1);
                         assert.equal(guests[0].name, "Руслан Михалев");
+                        assert.equal(guests[0].cardId, "0abcdefg");
                         assert.ok(guests[0].code);
                         assert.ok(guests[0].qrcode);
                         assert.ok(guests[0].qrcode.indexOf("png") > 0);
