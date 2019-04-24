@@ -21,20 +21,17 @@ app.get('/guests/health', function (req, res) {
 });
 
 app.post('/guests/meet', function (req, res) {
-    return Guest.meet(req.body.invite_code, {
-        extras: req.body.extras,
-        email: req.body.email
-    })
-        .then(result => {
-            return Guest.findByCode(req.body.invite_code)
-                .then(r => trelloService.approveGuest(r))
-                .then(r => result)
+    return Guest.findByCode(req.body.invite_code)
+        .then(guest => Guest.meet(req.body.invite_code, {
+            extras: req.body.extras,
+            email: req.body.email
         })
-        .then(r => {
-            res.status(r.nModified > 0 ? 200 : 204);
-            res.send();
-        })
-        .catch(e => errorHandler(res, e));
+            .then(result => trelloService.approveGuest(guest).then(() => result))
+            .then(r => {
+                res.status(r.nModified > 0 ? 200 : 204);
+                res.send();
+            })
+            .catch(e => errorHandler(res, e)));
 });
 
 app.get('/guests', function (req, res) {
