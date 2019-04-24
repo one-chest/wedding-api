@@ -13,6 +13,7 @@ const guest = {
         "code": "0000",
         "qrcode": "data:image/png;base64,iVB===",
         "name": "Руслан Михалев",
+        "greeting": "Руслан Михалев",
         "createdDate": new Date(),
     }
 };
@@ -25,6 +26,7 @@ const guests = {
             "code": "0000",
             "qrcode": "data:image/png;base64,iVB===",
             "name": "Руслан Михалев",
+            "greeting": "Руслан Михалев",
             "createdDate": new Date(),
         },
         {
@@ -33,6 +35,7 @@ const guests = {
             "code": "00a1",
             "qrcode": "data:image/png;base64,iVB===",
             "name": "Анастасия Шаповалова",
+            "greeting": "Анастасия Шаповалова",
             "createdDate": new Date(),
         }
     ]
@@ -99,6 +102,7 @@ describe('API', () => {
                 .then(response => {
                     assert.equal(response.body.length, 1);
                     assert.equal(response.body[0].name, "Руслан Михалев");
+                    assert.equal(response.body[0].greeting, "Руслан Михалев");
                     assert.equal(response.body[0].code, "0000");
                     assert.equal(response.body[0].cardId, "0abcdefg");
                     assert.ok(response.body[0].qrcode);
@@ -117,6 +121,7 @@ describe('API', () => {
                 .expect(200)
                 .then(response => {
                     assert.equal(response.body.name, "Анастасия Шаповалова");
+                    assert.equal(response.body.greeting, "Анастасия Шаповалова");
                     assert.equal(response.body.code, "00a1");
                     done()
                 })
@@ -205,6 +210,7 @@ describe('API', () => {
             .post('/guests')
             .send({
                 name: "Руслан Михалев",
+                greeting: "Руслан Михалев",
                 cardId: "0abcdefg",
                 email: "guest@company.com",
                 extras: 1
@@ -215,6 +221,7 @@ describe('API', () => {
                     .then(guests => {
                         assert.equal(guests.length, 1);
                         assert.equal(guests[0].name, "Руслан Михалев");
+                        assert.equal(guests[0].greeting, "Руслан Михалев");
                         assert.equal(guests[0].cardId, "0abcdefg");
                         assert.ok(guests[0].code);
                         assert.ok(guests[0].qrcode);

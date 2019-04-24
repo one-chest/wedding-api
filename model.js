@@ -9,6 +9,7 @@ const GuestSchema = new mongoose.Schema({
     code: {type: String, required: true, index: true},
     qrcode: {type: String, required: true},
     name: {type: String, required: true},
+    greeting: {type: String, required: true},
     email: {type: String},
     createdDate: Date,
     extras: Number,
