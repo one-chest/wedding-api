@@ -68,7 +68,7 @@ describe('Test util', () => {
     const util = require('../util');
 
     it('code size should be 5 or less', function (done) {
-        assert.ok(util.generateCode().length <= 5);
+        assert.ok(util.generateCode().length <= 6);
         done()
     });
 
