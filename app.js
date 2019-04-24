@@ -9,6 +9,11 @@ app.mongoConnect = connect;
 app.use(bodyParser.json());
 app.use(express.urlencoded());
 
+function errorHandler(res, e) {
+    res.status(500);
+    res.send(e.message);
+}
+
 app.get('/guests/health', function (req, res) {
     res.status(200);
     res.send({status: "UP"});
@@ -27,11 +32,12 @@ app.post('/guests/meet', function (req, res) {
         .then(r => {
             res.status(r.nModified > 0 ? 200 : 204);
             res.send();
-        });
+        })
+        .catch(e => errorHandler(res, e));
 });
 
 app.get('/guests', function (req, res) {
-    return Guest.findAll().then(r => res.send(r));
+    return Guest.findAll().then(r => res.send(r)).catch(e => errorHandler(res, e));
 });
 
 app.post('/guests', function (req, res) {
@@ -44,7 +50,7 @@ app.get('/guests/:id', function (req, res) {
             res.status(404);
         }
         res.send(r)
-    });
+    }).catch(e => errorHandler(res, e));
 })
 ;
 
