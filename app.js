@@ -11,6 +11,7 @@ app.use(express.urlencoded());
 
 function errorHandler(res, e) {
     res.status(500);
+    console.error(e);
     res.send(e.message);
 }
 
