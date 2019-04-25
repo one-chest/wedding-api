@@ -42,6 +42,10 @@ app.post('/guests', function (req, res) {
     return Guest.save(req.body).then(r => res.send(r));
 });
 
+app.put('/guests', function (req, res) {
+    return Guest.update(req.body).then(r => res.send(r)).catch(e => errorHandler(res, e));
+});
+
 app.get('/guests/:id', function (req, res) {
     return Guest.findByCode(req.params.id.toLowerCase()).then(r => {
         if (!r) {

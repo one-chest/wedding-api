@@ -56,6 +56,7 @@ module.exports = {
                     }
                 )
         },
+        update: (data) => GuestModel.updateOne({code: data.code}, {$set: data}),
         delete: guestId => GuestModel.findByIdAndRemove(guestId)
     }
 };

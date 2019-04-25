@@ -188,6 +188,39 @@ describe('API', () => {
                         });
                 })
             )
+            .catch(e => done(e))
+    });
+
+
+    it('should update the guest', function (done) {
+        mongoUnit.load(guests)
+            .then(() => request(app)
+                .put('/guests')
+                .send({
+                    code: "00a1",
+                    name: "Руслан Михалев",
+                    greeting: "Руслан Михалев",
+                    cardId: "qwerty",
+                    email: "guest@company.com",
+                    extras: 1
+                })
+                .expect(200)
+                .then(response => {
+                    return Guest.findByCode("00a1")
+                        .then(guest => {
+                            assert.equal(guest.name, "Руслан Михалев");
+                            assert.equal(guest.greeting, "Руслан Михалев");
+                            assert.equal(guest.cardId, "qwerty");
+                            assert.ok(guest.code);
+                            assert.ok(guest.qrcode);
+                            assert.ok(guest.qrcode.indexOf("png") > 0);
+                            assert.equal(guest.approved, undefined);
+                            assert.equal(guest.extras, 1);
+                            assert.equal(guest.email, "guest@company.com");
+                            done();
+                        })
+                })
+            )
             .catch(e => done(e));
     });
 
