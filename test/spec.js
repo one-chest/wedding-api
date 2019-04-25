@@ -195,7 +195,7 @@ describe('API', () => {
     it('should update the guest', function (done) {
         mongoUnit.load(guests)
             .then(() => request(app)
-                .put('/guests')
+                .patch('/guests')
                 .send({
                     code: "00a1",
                     name: "Руслан Михалев",

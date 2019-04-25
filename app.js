@@ -42,7 +42,7 @@ app.post('/guests', function (req, res) {
     return Guest.save(req.body).then(r => res.send(r)).catch(e => errorHandler(res, e));
 });
 
-app.put('/guests', function (req, res) {
+app.patch('/guests', function (req, res) {
     return Guest.update(req.body).then(r => res.send(r)).catch(e => errorHandler(res, e));
 });
 
