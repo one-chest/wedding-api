@@ -44,7 +44,7 @@ app.post('/guests', function (req, res) {
 });
 
 app.patch('/guests', function (req, res) {
-    return Guest.update(req.body).then(r => res.send(r)).catch(e => errorHandler(res, e));
+    return Guest.update(req.body).then(r => res.send({modified: r.nModified > 0})).catch(e => errorHandler(res, e));
 });
 
 app.get('/guests/:id', function (req, res) {

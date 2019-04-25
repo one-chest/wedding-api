@@ -207,6 +207,7 @@ describe('API', () => {
                 })
                 .expect(200)
                 .then(response => {
+                    assert.ok(response.body.modified);
                     return Guest.findByCode("00a1")
                         .then(guest => {
                             assert.equal(guest.name, "Руслан Михалев");
