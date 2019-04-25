@@ -39,7 +39,7 @@ app.get('/guests', function (req, res) {
 });
 
 app.post('/guests', function (req, res) {
-    return Guest.save(req.body).then(r => res.send(r));
+    return Guest.save(req.body).then(r => res.send(r)).catch(e => errorHandler(res, e));
 });
 
 app.put('/guests', function (req, res) {
