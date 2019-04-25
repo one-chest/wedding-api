@@ -11,6 +11,7 @@ const GuestSchema = new mongoose.Schema({
     name: {type: String, required: true},
     greeting: {type: String, required: true},
     email: {type: String},
+    phone: {type: String},
     createdDate: Date,
     extras: Number,
     approved: Boolean,
@@ -36,6 +37,7 @@ module.exports = {
             console.debug(`Approve user with code ${code}`);
             return GuestModel.updateOne({code: code}, {
                 $set: {
+                    phone: data.phone,
                     extras: data.extras,
                     email: data.email,
                     approved: true,

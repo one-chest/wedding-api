@@ -23,6 +23,7 @@ app.get('/guests/health', function (req, res) {
 app.post('/guests/meet', function (req, res) {
     return Guest.findByCode(req.body.invite_code)
         .then(guest => Guest.meet(req.body.invite_code, {
+            phone: req.body.phone,
             extras: req.body.extras,
             email: req.body.email
         })
