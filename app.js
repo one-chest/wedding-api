@@ -27,9 +27,13 @@ app.post('/guests/meet', function (req, res) {
             extras: req.body.extras,
             email: req.body.email
         })
-            .then(result => trelloService.approveGuest(guest).then(() => result))
-            .then(r => {
-                res.status(r.nModified > 0 ? 200 : 204);
+            .then(result => {
+                if (r.nModified) {
+                    res.status(200);
+                    res.send();
+                    return trelloService.approveGuest(guest).then(() => result);
+                }
+                res.status(204);
                 res.send();
             })
             .catch(e => errorHandler(res, e)));
