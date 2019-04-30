@@ -22,4 +22,13 @@ function approveGuest(data) {
     return Promise.resolve(true);
 }
 
-module.exports = {approveGuest};
+function addCode(cardId, code) {
+    if (TRELLO_ENABLED) {
+        const url = `https://api.trello.com/1/cards/${cardId}/actions/comments?text=https://chest.one/${code}&key=${TRELLO_KEY}&token=${TRELLO_TOKEN}`;
+        console.log(url);
+        return axios.post(url);
+    }
+    return Promise.resolve(true);
+}
+
+module.exports = {approveGuest, addCode};
