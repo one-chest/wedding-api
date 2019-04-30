@@ -43,6 +43,19 @@ app.get('/guests', function (req, res) {
     return Guest.findAll().then(r => res.send(r)).catch(e => errorHandler(res, e));
 });
 
+app.get('/guests/list', function (req, res) {
+    return Guest.findAll().then(result => {
+        const header = "<html><body>";
+        const total = result.length;
+        const data = result.map(r => r.name + ` [<a href='https://chest.one/${r.code}'>${r.code}</a>] ` + " <img style='display:block; width:100px;height:100px;' src='" + r.qrcode + "' />")
+            .sort()
+            .reduce((r, n) => r + "<br />" + n);
+        const footer = "</body></html>";
+
+        return res.send(header + data + "<br />" + "Всего: " + total + footer);
+    }).catch(e => errorHandler(res, e));
+});
+
 app.post('/guests', function (req, res) {
     return Guest.save(req.body).then(r => res.send(r)).catch(e => errorHandler(res, e));
 });
