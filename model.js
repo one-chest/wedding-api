@@ -9,7 +9,9 @@ const GuestSchema = new mongoose.Schema({
     code: {type: String, required: true, index: true},
     qrcode: {type: String, required: true},
     name: {type: String, required: true},
+    greeting: {type: String, required: true},
     email: {type: String},
+    phone: {type: String},
     createdDate: Date,
     extras: Number,
     approved: Boolean,
@@ -35,6 +37,7 @@ module.exports = {
             console.debug(`Approve user with code ${code}`);
             return GuestModel.updateOne({code: code}, {
                 $set: {
+                    phone: data.phone,
                     extras: data.extras,
                     email: data.email,
                     approved: true,
@@ -42,18 +45,20 @@ module.exports = {
                 }
             })
         },
-        save: (name, cardId) => {
+        save: (data) => {
             const code = util.generateCode();
             return qrcodeGenerator.toDataURL(`${weddingWebsite}/${code}`)
-                .then(qrcode => new GuestModel({
-                        name: name,
-                        cardId: cardId,
-                        code: code,
-                        qrcode: qrcode,
-                        createdDate: new Date()
-                    }).save()
+                .then(qrcode => {
+                        return new GuestModel({
+                            ...data,
+                            code,
+                            qrcode: qrcode,
+                            createdDate: new Date()
+                        }).save();
+                    }
                 )
         },
+        update: (data) => GuestModel.updateOne({code: data.code}, {$set: data}),
         delete: guestId => GuestModel.findByIdAndRemove(guestId)
     }
 };
