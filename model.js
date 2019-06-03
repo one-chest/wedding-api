@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const util = require('./util');
 const qrcodeGenerator = require('qrcode');
+const trelloService = require('./trello-service');
 
 const weddingWebsite = process.env.WEDDING_WEBSITE || 'localhost:80';
 
@@ -46,17 +46,19 @@ module.exports = {
             })
         },
         save: (data) => {
-            const code = util.generateCode();
-            return qrcodeGenerator.toDataURL(`${weddingWebsite}/${code}`)
-                .then(qrcode => {
-                        return new GuestModel({
-                            ...data,
-                            code,
-                            qrcode: qrcode,
-                            createdDate: new Date()
-                        }).save();
-                    }
-                )
+            return trelloService.generateAndSaveCode(data.cardId)
+                .then(code => {
+                    return qrcodeGenerator.toDataURL(`${weddingWebsite}/${code}`)
+                        .then(qrcode => {
+                                return new GuestModel({
+                                    ...data,
+                                    code,
+                                    qrcode: qrcode,
+                                    createdDate: new Date()
+                                }).save();
+                            }
+                        )
+                })
         },
         update: (data) => GuestModel.updateOne({code: data.code}, {$set: data}),
         delete: guestId => GuestModel.findByIdAndRemove(guestId)

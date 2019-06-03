@@ -57,10 +57,8 @@ app.get('/guests/list', function (req, res) {
 });
 
 app.post('/guests', function (req, res) {
-    return Guest.save(req.body).then(r =>
-        trelloService
-            .addCode(r.cardId, r.code)
-            .then(() => res.send(r)))
+    return Guest.save(req.body)
+        .then(r => res.send(r))
         .catch(e => errorHandler(res, e));
 });
 
