@@ -53,6 +53,7 @@ const approvedGuest = {
         "email": "guest@company.com",
         "createdDate": new Date(),
         "extras": 1,
+        "day": "both",
         "approved": true,
         "approvedDate": new Date()
     }
@@ -157,6 +158,7 @@ describe('API', () => {
                 .then(response => {
                     assert.equal(response.body.length, 1);
                     assert.equal(response.body[0].extras, 1);
+                    assert.equal(response.body[0].day, "both");
                     assert.equal(response.body[0].name, "Руслан Михалев");
                     assert.equal(response.body[0].cardId, "0abcdefg");
                     assert.equal(response.body[0].email, "guest@company.com");
@@ -171,7 +173,7 @@ describe('API', () => {
         mongoUnit.load(guest)
             .then(() => request(app)
                 .post('/guests/meet')
-                .send("invite_code=0000&extras=3&email=guest@company.com&phone=%2B79139139139")
+                .send("invite_code=0000&extras=3&day=both&email=guest@company.com&phone=%2B79139139139")
                 .expect(200)
                 .then(response => {
                     return request(app)
@@ -181,6 +183,7 @@ describe('API', () => {
                             assert.equal(response.body.length, 1);
                             assert.equal(response.body[0].approved, true);
                             assert.equal(response.body[0].extras, 3);
+                            assert.equal(response.body[0].day, "both");
                             assert.equal(response.body[0].phone, "+79139139139");
                             assert.equal(response.body[0].name, "Руслан Михалев");
                             assert.equal(response.body[0].cardId, "0abcdefg");

@@ -14,6 +14,7 @@ const GuestSchema = new mongoose.Schema({
     phone: {type: String},
     createdDate: Date,
     extras: Number,
+    day: {type: String},
     approved: Boolean,
     approvedDate: Date
 });
@@ -39,6 +40,7 @@ module.exports = {
                 $set: {
                     phone: data.phone,
                     extras: data.extras,
+                    day: data.day,
                     email: data.email,
                     approved: true,
                     approvedDate: new Date()

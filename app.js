@@ -25,6 +25,7 @@ app.post('/guests/meet', function (req, res) {
         .then(guest => Guest.meet(req.body.invite_code, {
             phone: req.body.phone,
             extras: req.body.extras,
+            day: req.body.day,
             email: req.body.email
         })
             .then(result => {
