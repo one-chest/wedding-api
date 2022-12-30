@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "assert": "^1.4.1",
-    "mocha": "^6.1.3",
+    "mocha": "^10.2.0",
     "mocha-prepare": "^0.1.0",
     "mongo-unit": "^1.4.4",
     "supertest": "^4.0.2"
